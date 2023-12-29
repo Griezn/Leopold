@@ -1,0 +1,10 @@
+# ninja log v5
+0	323	1703696852000239342	CMakeFiles/Leopold_I.dir/main.cpp.o	aedce342921cfa4b
+4	302	1703697087157391380	CMakeFiles/Leopold_I.dir/Manille.cpp.o	21c24003a2305471
+302	335	1703697087191988847	Leopold_I	a4d61c8170683e5b
+5	168	1703868379738606384	CMakeFiles/Leopold_I.dir/Agent.cpp.o	d3c4b0a60be80a7c
+5	168	1703868379738582301	CMakeFiles/Leopold_I.dir/tests/AgentTests.cpp.o	c2cbbf567364fabd
+5	168	1703868379738582426	CMakeFiles/Leopold_I.dir/tests/ManilleTests.cpp.o	c1a289fb43d60520
+4	367	1703868379937656687	CMakeFiles/Leopold_I.dir/Manille.cpp.o	21c24003a2305471
+4	438	1703868380008820464	CMakeFiles/Leopold_I.dir/main.cpp.o	aedce342921cfa4b
+438	484	1703868380055590396	Leopold_I	1178896971c4f238
