@@ -12,6 +12,7 @@ enum class Suit;
 enum class Value;
 
 typedef std::vector<Card> CardVector;
+typedef std::shared_ptr<CardVector> CardVectorPtr;
 
 struct Manille {
     /**
@@ -22,7 +23,7 @@ struct Manille {
      * @param trump the trump suit
      * @return the cards that the player is allowed to play
      */
-    static CardVector get_allowed_cards(const CardVector &player, const CardVector &trick, const Suit trump);
+    [[nodiscard]] static CardVector get_allowed_cards(const CardVector &player, const CardVector &trick, Suit trump);
 
 
     /**
@@ -70,7 +71,6 @@ struct Manille {
      */
     [[nodiscard]] static bool is_partner_leading(const CardVector &trick, int player_index, Suit trump);
 
-private:
 
     /**
      * Filters the cards that have a certain suit.

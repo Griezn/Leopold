@@ -5,8 +5,8 @@
 #ifndef CARD_HPP
 #define CARD_HPP
 
-#include <iosfwd>
-
+struct Card;
+typedef std::vector<Card> CardVector;
 
 enum class Suit {
     NONE,
@@ -67,6 +67,18 @@ struct Card {
     }
 
 
+    bool operator<=(const Card &other) const
+    {
+        return !(other < *this);
+    }
+
+
+    bool operator>=(const Card &other) const
+    {
+        return !(*this < other);
+    }
+
+
     [[nodiscard]] int points() const
     {
         switch (value) {
@@ -88,6 +100,17 @@ struct Card {
     [[nodiscard]] bool valid() const
     {
         return suit != Suit::NONE;
+    }
+
+    static CardVector get_deck()
+    {
+        CardVector deck;
+        for (int i = 1; i < 5; i++) {
+            for (int j = 0; j < 8; j++) {
+                deck.emplace_back(static_cast<Suit>(i), static_cast<Value>(j));
+            }
+        }
+        return deck;
     }
 };
 

@@ -8,8 +8,6 @@
 
 CardVector Manille::get_allowed_cards(const CardVector &player, const CardVector &trick, const Suit trump)
 {
-    const CardVector allowed = CardVector();
-
     const Suit suit = trick[0].suit;
     if (suit == trump) {
         auto filtered = filter_cards(player, suit);
