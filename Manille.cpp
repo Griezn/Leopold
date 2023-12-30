@@ -2,6 +2,7 @@
 // Created by Seppe Degryse on 27/12/2023.
 //
 
+#include <algorithm>
 #include "Manille.hpp"
 #include "Card.hpp"
 

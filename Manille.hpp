@@ -6,6 +6,7 @@
 #define MANILLE_HPP
 
 #include <vector>
+#include <memory>
 
 struct Card;
 enum class Suit;
