@@ -63,14 +63,14 @@ struct Manille {
 
 
     /**
-     * Determines whether the partner of the player is leading in the trick, given the cards that are played, the index
-     * of the player and the trump suit.
+     * Determines whether the partner of the player is leading a suit in the trick, given the cards that are played, the index
+     * of the player and the suit.
      * @param trick the cards that are played in the trick
      * @param player_index the index of the player
      * @param trump the trump suit
      * @return whether the partner of the player is leading in the trick
      */
-    [[nodiscard]] static bool is_partner_leading(const CardVector &trick, int player_index, Suit trump);
+    [[nodiscard]] static bool is_partner_leading(const CardVector &trick, int player_index, Suit suit);
 
 
     /**

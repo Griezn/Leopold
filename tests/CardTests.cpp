@@ -1,6 +1,3 @@
-//
-// Created by Seppe Degryse on 30/12/2023.
-//
 #include <gtest/gtest.h>
 #include "../Card.hpp"
 
@@ -9,7 +6,7 @@ TEST(Card, default_constructor)
 {
     Card card;
     EXPECT_EQ(card.suit, Suit::NONE);
-    EXPECT_EQ(card.value, Value::SEVEN);
+    EXPECT_EQ(card.value, Value::NONE);
     EXPECT_EQ(card.player, 0);
     EXPECT_FALSE(card.valid());
 }

@@ -17,6 +17,7 @@ enum class Suit {
 };
 
 enum class Value {
+    NONE,
     SEVEN,
     EIGHT,
     NINE,
@@ -33,7 +34,7 @@ struct Card {
     Value value;
     int player;
 
-    Card() : Card(Suit::NONE, Value::SEVEN)
+    Card() : Card(Suit::NONE, Value::NONE)
     {}
 
     Card(const Suit suit, const Value value) : Card(suit, value, 0)
@@ -99,14 +100,14 @@ struct Card {
 
     [[nodiscard]] bool valid() const
     {
-        return suit != Suit::NONE;
+        return suit != Suit::NONE && value != Value::NONE;
     }
 
     static CardVector get_deck()
     {
         CardVector deck;
-        for (int i = 1; i < 5; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 1; i <= 4; i++) {
+            for (int j = 1; j <= 8; j++) {
                 deck.emplace_back(static_cast<Suit>(i), static_cast<Value>(j));
             }
         }

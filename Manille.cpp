@@ -57,16 +57,16 @@ CardVector Manille::get_allowed_cards(const CardVector &player, const CardVector
         // If there are no played cards from the trump suit, the player has to use a card from the trump suit only if
         // their partner is not leading
         if (played_filtered.empty()) {
-            if (!is_partner_leading(trick, static_cast<int>(trick[0].player), trump)) {
-                return player;
-            } else {
+            if (!is_partner_leading(trick, static_cast<int>(player[0].player), trump)) {
                 return filtered;
+            } else {
+                return player;
             }
         }
 
         // At this point, there are played cards from the trump suit
         // If the partner is leading, the player can play any card
-        if (is_partner_leading(trick, static_cast<int>(trick[0].player), trump)) {
+        if (is_partner_leading(trick, static_cast<int>(player[0].player), trump)) {
             return player;
         }
 
@@ -124,7 +124,7 @@ CardVector Manille::filter_cards_higher(const CardVector &cards, Suit suit, Card
 
 Card Manille::get_highest_card(const CardVector &cards, Suit suit)
 {
-    Card highest = cards[0];
+    Card highest = Card();
     for (auto &card: cards) {
         if (card.suit == suit && card > highest) {
             highest = card;
@@ -146,9 +146,9 @@ int Manille::get_leader(const CardVector &trick, const Suit suit)
 }
 
 
-bool Manille::is_partner_leading(const CardVector &trick, int player_index, Suit trump)
+bool Manille::is_partner_leading(const CardVector &trick, int player_index, Suit suit)
 {
-    return get_leader(trick, trump) == (player_index + 2) % 4;
+    return get_leader(trick, suit) == (player_index + 2) % 4;
 }
 
 
