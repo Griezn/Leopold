@@ -444,3 +444,22 @@ TEST(Manille, get_allowed_cards2)
     };
     EXPECT_EQ(Manille::get_allowed_cards(player, trick, trump), expected);
 }
+
+
+TEST(Manille, get_allowed_cards3)
+{
+    CardVector trick = {};
+
+    CardVector player = {
+            Card(Suit::HEARTS, Value::QUEEN, 1),
+            Card(Suit::HEARTS, Value::JACK, 1),
+            Card(Suit::CLUBS, Value::KING, 1),
+            Card(Suit::CLUBS, Value::EIGHT, 1),
+            Card(Suit::DIAMONDS, Value::SEVEN, 1),
+            Card(Suit::SPADES, Value::QUEEN, 1),
+            Card(Suit::SPADES, Value::NINE, 1),
+            Card(Suit::SPADES, Value::SEVEN, 1),
+    };
+
+    EXPECT_EQ(Manille::get_allowed_cards(player, trick, Suit::HEARTS), player);
+}
