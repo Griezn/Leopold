@@ -14,21 +14,26 @@ add_library(Leopold_I STATIC
         Manille.cpp
         Manille.hpp
         Card.hpp
+        State.hpp
+        State.cpp
 )
 
 
 enable_testing()
 
 add_executable(
-        manille_test
+        tests
         tests/ManilleTests.cpp
         tests/CardTests.cpp
+        tests/StateTests.cpp
 )
+
+
 target_link_libraries(
-        manille_test
+        tests
         GTest::gtest_main
         Leopold_I
 )
 
 include(GoogleTest)
-gtest_discover_tests(manille_test)
+gtest_discover_tests(tests)
