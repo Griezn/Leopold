@@ -38,7 +38,7 @@ public:
      * Returns the score of the state.
      * @return the score of the state
      */
-    [[nodiscard]] int get_score() const;
+    [[nodiscard]] float get_score() const;
 
 
     /**
@@ -68,7 +68,7 @@ private:
     CardVector trick_cards;
     Suit trump;
     int player;
-    int score;
+    float score;
 
 
     /**

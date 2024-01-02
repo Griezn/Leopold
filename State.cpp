@@ -2,6 +2,7 @@
 // Created by Seppe Degryse on 31/12/2023.
 //
 
+#include <iostream>
 #include "State.hpp"
 #include "Card.hpp"
 #include "Manille.hpp"
@@ -13,9 +14,9 @@ bool State::is_terminal() const
 }
 
 
-int State::get_score() const
+float State::get_score() const
 {
-    return score;
+    return score/2;
 }
 
 

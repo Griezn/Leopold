@@ -58,7 +58,7 @@ TEST(State, get_children_player)
     auto child = children[0];
 
     EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 1);
+    EXPECT_EQ(child.get_score(), 0.5);
     EXPECT_EQ(child.get_player(), 2);
 }
 
@@ -77,7 +77,7 @@ TEST(State, get_children_opp)
 
     auto child = children[0];
     EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), -1);
+    EXPECT_EQ(child.get_score(), -0.5);
     EXPECT_EQ(child.get_player(), 1);
 }
 
@@ -120,6 +120,6 @@ TEST(State, get_children)
 
     child = children[0];
     EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 10);
+    EXPECT_EQ(child.get_score(), 5);
     EXPECT_EQ(child.get_player(), 1);
 }
