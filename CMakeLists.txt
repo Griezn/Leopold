@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(Leopold_I)
+project(Leopold)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -10,12 +10,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_library(Leopold_I STATIC
+add_library(Leopold STATIC
         Manille.cpp
         Manille.hpp
         Card.hpp
         State.hpp
         State.cpp
+        Agent.cpp
 )
 
 
@@ -26,13 +27,14 @@ add_executable(
         tests/ManilleTests.cpp
         tests/CardTests.cpp
         tests/StateTests.cpp
+        tests/AgentTests.cpp
 )
 
 
 target_link_libraries(
         tests
         GTest::gtest_main
-        Leopold_I
+        Leopold
 )
 
 include(GoogleTest)
