@@ -62,3 +62,41 @@ TEST(Card, deck)
     EXPECT_EQ(deck[0], Card(Suit::HEARTS, Value::SEVEN));
     EXPECT_EQ(deck[31], Card(Suit::DIAMONDS, Value::TEN));
 }
+
+
+TEST(Card, to_int)
+{
+    auto card = Card(Suit::HEARTS, Value::SEVEN);
+    EXPECT_EQ(static_cast<int>(card), 0);
+
+    card = Card(Suit::SPADES, Value::SEVEN);
+    EXPECT_EQ(static_cast<int>(card), 8);
+
+    card = Card(Suit::CLUBS, Value::SEVEN);
+    EXPECT_EQ(static_cast<int>(card), 16);
+
+    card = Card(Suit::DIAMONDS, Value::TEN);
+    EXPECT_EQ(static_cast<int>(card), 31);
+
+    card = Card(Suit::NONE, Value::NONE);
+    EXPECT_EQ(static_cast<int>(card), -9);
+}
+
+
+TEST(Card, from_int)
+{
+    auto card = Card(0);
+    EXPECT_EQ(card, Card(Suit::HEARTS, Value::SEVEN));
+
+    card = Card(8);
+    EXPECT_EQ(card, Card(Suit::SPADES, Value::SEVEN));
+
+    card = Card(16);
+    EXPECT_EQ(card, Card(Suit::CLUBS, Value::SEVEN));
+
+    card = Card(31);
+    EXPECT_EQ(card, Card(Suit::DIAMONDS, Value::TEN));
+
+    card = Card(-9);
+    EXPECT_EQ(card, Card(Suit::NONE, Value::NONE));
+}

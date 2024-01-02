@@ -37,6 +37,9 @@ struct Card {
     Card() : Card(Suit::NONE, Value::NONE)
     {}
 
+    explicit Card(int card) : Card(static_cast<Suit>(card / 8 + 1), static_cast<Value>(card % 8 + 1))
+    {}
+
     Card(const Suit suit, const Value value) : Card(suit, value, 0)
     {}
 
@@ -77,6 +80,12 @@ struct Card {
     bool operator>=(const Card &other) const
     {
         return !(*this < other);
+    }
+
+
+    explicit operator int() const
+    {
+        return (static_cast<int>(suit) - 1) * 8 + (static_cast<int>(value) - 1);
     }
 
 
