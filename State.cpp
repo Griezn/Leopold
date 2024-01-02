@@ -10,7 +10,7 @@
 
 bool State::is_terminal() const
 {
-    return player_cards.empty() && remaining_cards.empty();
+    return player_cards.none() && remaining_cards.none();
 }
 
 
@@ -45,35 +45,44 @@ int State::get_next_player() const
 
 void State::generate_children_opponent(StateVector &children) const
 {
-    for (auto card: remaining_cards) {
-        card.player = player;
+    for (int i = 0; i < CARD_COUNT; ++i) {
+        if (!remaining_cards[i]) {
+            continue;
+        }
+
         auto child = State(*this);
-        child.trick_cards.push_back(card);
-        child.remaining_cards.erase(std::find(child.remaining_cards.begin(), child.remaining_cards.end(), card));
+        child.trick_cards.emplace_back(i);
+        child.trick_cards.back().player = player;
+        child.remaining_cards[i] = false;
         child.player = get_next_player();
 
         if (child.trick_cards.size() == 4) {
             complete_trick(child);
         }
 
-        children.push_back(child);
+        children.emplace_back(child);
     }
 }
 
 
 void State::generate_children_player(StateVector &children) const
 {
-    for (auto card: player_cards) {
+    for (int i = 0; i < CARD_COUNT; ++i) {
+        if (!player_cards[i]) {
+            continue;
+        }
+
         auto child = State(*this);
-        child.trick_cards.push_back(card);
-        child.player_cards.erase(std::find(child.player_cards.begin(), child.player_cards.end(), card));
+        child.trick_cards.emplace_back(i);
+        child.trick_cards.back().player = player;
+        child.player_cards[i] = false;
         child.player = get_next_player();
 
         if (child.trick_cards.size() == 4) {
             complete_trick(child);
         }
 
-        children.push_back(child);
+        children.emplace_back(child);
     }
 }
 
@@ -90,12 +99,19 @@ void State::complete_trick(State &child) const
 }
 
 
-State::State(CardVector player_cards, CardVector remaining_cards, CardVector trick_cards, Suit trump, int player) :
-        player_cards(std::move(player_cards)),
-        remaining_cards(std::move(remaining_cards)),
+State::State(const CardVector& player_cards, const CardVector& remaining_cards, CardVector trick_cards, Suit trump, int player) :
+        player_cards(),
+        remaining_cards(),
         trick_cards(std::move(trick_cards)),
         trump(trump),
         player(player),
         score(0)
 {
+    for (auto &card: player_cards) {
+        this->player_cards[static_cast<int>(card)] = true;
+    }
+
+    for (auto &card: remaining_cards) {
+        this->remaining_cards[static_cast<int>(card)] = true;
+    }
 }

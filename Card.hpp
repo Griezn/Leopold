@@ -7,6 +7,7 @@
 
 struct Card;
 typedef std::vector<Card> CardVector;
+constexpr int CARD_COUNT = 32;
 
 enum class Suit {
     NONE,
@@ -43,7 +44,7 @@ struct Card {
     Card(const Suit suit, const Value value) : Card(suit, value, 0)
     {}
 
-    Card(const Suit suit, const Value value, const unsigned int player) : suit(suit), value(value), player(player)
+    Card(const Suit suit, const Value value, const int player) : suit(suit), value(value), player(player)
     {}
 
 

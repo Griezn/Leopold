@@ -24,7 +24,7 @@ public:
      * @param trump the trump suit
      * @param player the index of the player that has to play
      */
-    State(CardVector player_cards, CardVector remaining_cards, CardVector trick_cards, Suit trump, int player);
+    State(const CardVector& player_cards, const CardVector& remaining_cards, CardVector trick_cards, Suit trump, int player);
 
 
     /**
@@ -63,8 +63,8 @@ public:
 
 
 private:
-    CardVector player_cards;
-    CardVector remaining_cards;
+    std::bitset<32> player_cards;
+    std::bitset<32> remaining_cards;
     CardVector trick_cards;
     Suit trump;
     int player;
