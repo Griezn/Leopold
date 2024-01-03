@@ -54,7 +54,7 @@ void State::generate_children_opponent(StateVector &children) const
 
         auto child = new State(*this);
         child->trick_cards.emplace_back(i);
-        child->trick_cards.back().player = player;
+        child->trick_cards.back().set_player(player);
         child->remaining_cards[i] = false;
         child->player = get_next_player();
 
@@ -76,7 +76,7 @@ void State::generate_children_player(StateVector &children) const
 
         auto child = new State(*this);
         child->trick_cards.emplace_back(i);
-        child->trick_cards.back().player = player;
+        child->trick_cards.back().set_player(player);
         child->player_cards[i] = false;
         child->player = get_next_player();
 

@@ -23,7 +23,7 @@ TEST(Agent, alpha_beta)
 
     for (auto &card: player_cards) {
         deck.erase(std::find(deck.begin(), deck.end(), card));
-        card.player = 1;
+        card.set_player(1);
     }
     int size = player_cards.size() * 3;
     deck.erase(deck.begin(), deck.begin() + (deck.size() - size));

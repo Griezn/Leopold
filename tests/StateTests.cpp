@@ -8,18 +8,18 @@ TEST(State, is_terminal)
     CardVector remaining_cards;
     CardVector trick_cards;
 
-    State state(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    State state(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
     EXPECT_TRUE(state.is_terminal());
 
-    player_cards = CardVector{Card(Suit::HEARTS, Value::JACK)};
-    state = State(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    player_cards = CardVector{Card(HEARTS_MASK, JACK_MASK)};
+    state = State(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
     EXPECT_FALSE(state.is_terminal());
 
 
-    remaining_cards = CardVector{Card(Suit::HEARTS, Value::JACK)};
-    trick_cards = CardVector{Card(Suit::HEARTS, Value::JACK), Card(Suit::HEARTS, Value::JACK),
-                             Card(Suit::HEARTS, Value::JACK), Card(Suit::HEARTS, Value::JACK)};
-    state = State(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    remaining_cards = CardVector{Card(HEARTS_MASK, JACK_MASK)};
+    trick_cards = CardVector{Card(HEARTS_MASK, JACK_MASK), Card(HEARTS_MASK, JACK_MASK),
+                             Card(HEARTS_MASK, JACK_MASK), Card(HEARTS_MASK, JACK_MASK)};
+    state = State(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
     EXPECT_FALSE(state.is_terminal());
 }
 
@@ -30,28 +30,28 @@ TEST(State, get_next_player)
     CardVector remaining_cards;
     CardVector trick_cards;
 
-    State state(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    State state(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
     EXPECT_EQ(state.get_next_player(), 2);
 
-    state = State(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 2);
+    state = State(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 2);
     EXPECT_EQ(state.get_next_player(), 3);
 
-    state = State(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 3);
+    state = State(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 3);
     EXPECT_EQ(state.get_next_player(), 4);
 
-    state = State(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 4);
+    state = State(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 4);
     EXPECT_EQ(state.get_next_player(), 1);
 }
 
 
 TEST(State, get_children_player)
 {
-    CardVector player_cards = CardVector{Card(Suit::HEARTS, Value::JACK, 1)};
+    CardVector player_cards = CardVector{Card(HEARTS_MASK, JACK_MASK, 1)};
     CardVector remaining_cards;
-    CardVector trick_cards = CardVector{Card(Suit::HEARTS, Value::SEVEN, 2), Card(Suit::HEARTS, Value::EIGHT, 3),
-                                        Card(Suit::HEARTS, Value::NINE, 4)};
+    CardVector trick_cards = CardVector{Card(HEARTS_MASK, SEVEN_MASK, 2), Card(HEARTS_MASK, EIGHT_MASK, 3),
+                                        Card(HEARTS_MASK, NINE_MASK, 4)};
 
-    State state(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    State state(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
 
     auto children = state.get_children();
     EXPECT_EQ(children.size(), 1);
@@ -66,11 +66,11 @@ TEST(State, get_children_player)
 TEST(State, get_children_opp)
 {
     CardVector player_cards;
-    CardVector remaining_cards = CardVector{Card(Suit::HEARTS, Value::JACK)};
-    CardVector trick_cards = CardVector{Card(Suit::HEARTS, Value::SEVEN, 1), Card(Suit::HEARTS, Value::EIGHT, 2),
-                                        Card(Suit::HEARTS, Value::NINE, 3)};
+    CardVector remaining_cards = CardVector{Card(HEARTS_MASK, JACK_MASK)};
+    CardVector trick_cards = CardVector{Card(HEARTS_MASK, SEVEN_MASK, 1), Card(HEARTS_MASK, EIGHT_MASK, 2),
+                                        Card(HEARTS_MASK, NINE_MASK, 3)};
 
-    State state(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 4);
+    State state(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 4);
 
     auto children = state.get_children();
     EXPECT_EQ(children.size(), 1);
@@ -84,12 +84,12 @@ TEST(State, get_children_opp)
 
 TEST(State, get_children)
 {
-    CardVector player_cards = CardVector{Card(Suit::HEARTS, Value::TEN, 1),};
-    CardVector remaining_cards = CardVector{Card(Suit::HEARTS, Value::JACK), Card(Suit::HEARTS, Value::NINE),
-                                            Card(Suit::HEARTS, Value::ACE)};
+    CardVector player_cards = CardVector{Card(HEARTS_MASK, TEN_MASK, 1),};
+    CardVector remaining_cards = CardVector{Card(HEARTS_MASK, JACK_MASK), Card(HEARTS_MASK,NINE_MASK),
+                                            Card(HEARTS_MASK, ACE_MASK)};
     CardVector trick_cards = CardVector{};
 
-    State state(player_cards, remaining_cards, trick_cards, Suit::HEARTS, 1);
+    State state(player_cards, remaining_cards, trick_cards, HEARTS_MASK, 1);
 
     auto children = state.get_children();
     EXPECT_EQ(children.size(), 1);

@@ -6,120 +6,155 @@
 #define CARD_HPP
 
 struct Card;
+typedef std::uint8_t byte;
+typedef byte Suit;
+typedef byte Value;
 typedef std::vector<Card> CardVector;
 constexpr int CARD_COUNT = 32;
 
-enum class Suit {
-    NONE,
-    HEARTS,
-    SPADES,
-    CLUBS,
-    DIAMONDS
-};
+// MASKS
+constexpr byte VALUE_MASK   = 0b0000'1111;
+constexpr byte SUIT_MASK    = 0b0011'0000;
+constexpr byte PLAYER_MASK  = 0b1100'0000;
 
-enum class Value {
-    NONE,
-    SEVEN,
-    EIGHT,
-    NINE,
-    JACK,
-    QUEEN,
-    KING,
-    ACE,
-    TEN
-};
+constexpr byte HEARTS_MASK  = 0b0000'0000;
+constexpr byte SPADES_MASK  = 0b0001'0000;
+constexpr byte CLUBS_MASK   = 0b0010'0000;
+constexpr byte DIAMONDS_MASK= 0b0011'0000;
+
+constexpr byte SEVEN_MASK   = 0b0000'0000;
+constexpr byte EIGHT_MASK   = 0b0000'0001;
+constexpr byte NINE_MASK    = 0b0000'0010;
+constexpr byte JACK_MASK    = 0b0000'0011;
+constexpr byte QUEEN_MASK   = 0b0000'0100;
+constexpr byte KING_MASK    = 0b0000'0101;
+constexpr byte ACE_MASK     = 0b0000'0110;
+constexpr byte TEN_MASK     = 0b0000'0111;
+
+constexpr byte P1_MASK      = 0b0000'0000;
+constexpr byte P2_MASK      = 0b0100'0000;
+constexpr byte P3_MASK      = 0b1000'0000;
+constexpr byte P4_MASK      = 0b1100'0000;
 
 struct Card {
+    byte card;
 
-    Suit suit;
-    Value value;
-    int player;
-
-    Card() : Card(Suit::NONE, Value::NONE)
-    {}
-
-    explicit Card(int card) : Card(static_cast<Suit>(card / 8 + 1), static_cast<Value>(card % 8 + 1))
-    {}
-
-    Card(const Suit suit, const Value value) : Card(suit, value, 0)
-    {}
-
-    Card(const Suit suit, const Value value, const int player) : suit(suit), value(value), player(player)
-    {}
-
-
-    bool operator==(const Card &other) const
+    explicit Card(int value) : Card((value/8) << 4, value % 8)
     {
-        return this->suit == other.suit && this->value == other.value;
     }
 
 
-    bool operator!=(const Card &other) const
+    Card() : card(255)
+    {
+    }
+
+
+    Card(Suit suit, Value value) : Card(suit, value, 1)
+    {
+    }
+
+
+    Card(Suit suit, Value value, int player)
+    {
+        card = ((player - 1) << 6) | suit | value;
+    }
+
+    inline bool operator==(const Card &other) const
+    {
+        return (card & ~PLAYER_MASK) == (other.card & ~PLAYER_MASK);
+    }
+
+
+    inline bool operator!=(const Card &other) const
     {
         return !(*this == other);
     }
 
 
-    bool operator<(const Card &other) const
+    inline bool operator<(const Card &other) const
     {
-        return this->value < other.value;
+        return (this->card & VALUE_MASK) < (other.card & VALUE_MASK);
     }
 
 
-    bool operator>(const Card &other) const
+    inline bool operator>(const Card &other) const
     {
-        return other.value < this->value;
+        return (other.card & VALUE_MASK) < (this->card & VALUE_MASK);
     }
 
 
-    bool operator<=(const Card &other) const
+    inline bool operator<=(const Card &other) const
     {
         return !(other < *this);
     }
 
 
-    bool operator>=(const Card &other) const
+    inline bool operator>=(const Card &other) const
     {
         return !(*this < other);
     }
 
 
+    [[nodiscard]] inline Suit suit() const
+    {
+        return card & SUIT_MASK;
+    }
+
+
+    [[nodiscard]] inline Value value() const
+    {
+        return card & VALUE_MASK;
+    }
+
+
+    [[nodiscard]] inline int player() const
+    {
+        return (card >> 6) + 1;
+    }
+
+
+    inline void set_player(int player)
+    {
+        card = card | ((player - 1) << 6);
+    }
+
+
     explicit operator int() const
     {
-        return (static_cast<int>(suit) - 1) * 8 + (static_cast<int>(value) - 1);
+        return (card & VALUE_MASK) + ((card & SUIT_MASK) >> 4) * 8;
     }
 
 
     [[nodiscard]] int points() const
     {
-        switch (value) {
-            case Value::JACK:
+        switch (card & VALUE_MASK) {
+            case JACK_MASK:
                 return 1;
-            case Value::QUEEN:
+            case QUEEN_MASK:
                 return 2;
-            case Value::KING:
+            case KING_MASK:
                 return 3;
-            case Value::ACE:
+            case ACE_MASK:
                 return 4;
-            case Value::TEN:
+            case TEN_MASK:
                 return 5;
             default:
                 return 0;
         }
     }
 
-    [[nodiscard]] bool valid() const
+
+    [[nodiscard]] inline bool valid() const
     {
-        return suit != Suit::NONE && value != Value::NONE;
+        return card != 255;
     }
+
 
     static CardVector get_deck()
     {
         CardVector deck;
-        for (int i = 1; i <= 4; i++) {
-            for (int j = 1; j <= 8; j++) {
-                deck.emplace_back(static_cast<Suit>(i), static_cast<Value>(j));
-            }
+        for (int i = 0; i < 32; ++i) {
+            deck.emplace_back(i);
         }
         return deck;
     }

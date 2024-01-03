@@ -12,7 +12,7 @@ CardVector Manille::get_allowed_cards(const CardVector &player, const CardVector
     if (trick.empty())
         return player;
 
-    const Suit suit = trick[0].suit;
+    const Suit suit = trick[0].suit();
     if (suit == trump) {
         auto filtered = filter_cards(player, suit);
 
@@ -60,7 +60,7 @@ CardVector Manille::get_allowed_cards(const CardVector &player, const CardVector
         // If there are no played cards from the trump suit, the player has to use a card from the trump suit only if
         // their partner is not leading
         if (played_filtered.empty()) {
-            if (!is_partner_leading(trick, static_cast<int>(player[0].player), trump)) {
+            if (!is_partner_leading(trick, player[0].player(), trump)) {
                 return filtered;
             } else {
                 return player;
@@ -69,7 +69,7 @@ CardVector Manille::get_allowed_cards(const CardVector &player, const CardVector
 
         // At this point, there are played cards from the trump suit
         // If the partner is leading, the player can play any card
-        if (is_partner_leading(trick, static_cast<int>(player[0].player), trump)) {
+        if (is_partner_leading(trick, player[0].player(), trump)) {
             return player;
         }
 
@@ -101,7 +101,7 @@ CardVector Manille::filter_cards(const CardVector &cards, Suit suit)
     CardVector filtered = CardVector();
 
     for (auto &card: cards) {
-        if (card.suit == suit) {
+        if (card.suit() == suit) {
             filtered.emplace_back(card);
         }
 
@@ -115,7 +115,7 @@ CardVector Manille::filter_cards_higher(const CardVector &cards, Suit suit, Card
     CardVector filtered = CardVector();
 
     for (auto &card: cards) {
-        if (card.suit == suit && card > a_card) {
+        if (card.suit() == suit && card > a_card) {
             filtered.emplace_back(card);
         }
 
@@ -127,9 +127,9 @@ CardVector Manille::filter_cards_higher(const CardVector &cards, Suit suit, Card
 
 Card Manille::get_highest_card(const CardVector &cards, Suit suit)
 {
-    Card highest = Card();
+    Card highest = Card(0);
     for (auto &card: cards) {
-        if (card.suit == suit && card > highest) {
+        if (card.suit() == suit && card >= highest) {
             highest = card;
         }
     }
@@ -145,7 +145,7 @@ int Manille::get_leader(const CardVector &trick, const Suit suit)
         return -1;
     }
 
-    return highest_card.player;
+    return highest_card.player();
 }
 
 
@@ -158,10 +158,10 @@ bool Manille::is_partner_leading(const CardVector &trick, int player_index, Suit
 Suit Manille::choose_trump(const CardVector &player)
 {
     int points[4] = {0, 0, 0, 0};
-    Suit suits[4] = {Suit::HEARTS, Suit::SPADES, Suit::CLUBS, Suit::DIAMONDS};
+    Suit suits[4] = {(Suit) HEARTS_MASK, (Suit) SPADES_MASK, (Suit) CLUBS_MASK, (Suit) DIAMONDS_MASK};
 
     for (auto &card: player) {
-        points[static_cast<int>(card.suit) - 1] += card.points();
+        points[(int) card.suit() >> 4] += card.points();
     }
 
     return suits[std::distance(points, std::max_element(points, points + 4))];
@@ -170,7 +170,7 @@ Suit Manille::choose_trump(const CardVector &player)
 
 int Manille::determine_winner(const CardVector &trick, Suit trump)
 {
-    const Suit suit = trick[0].suit;
+    const Suit suit = trick[0].suit();
     if (suit == trump || !filter_cards(trick, trump).empty()) {
         return get_leader(trick, trump);
     } else {
