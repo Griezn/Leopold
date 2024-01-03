@@ -17,13 +17,12 @@ typedef std::vector<Card> CardVector;
 struct Agent {
     Card choose_card(const CardVector &player, const CardVector &trick, Suit trump);
 
-    float alpha_beta(const State &state, float alpha, float beta);
+    float alpha_beta(State *state, float alpha, float beta);
 
-    int count = 0;
 private:
 
-    float maximize(const State &state, float alpha, float beta);
-    float minimize(const State &state, float alpha, float beta);
+    float maximize(State *state, float alpha, float beta);
+    float minimize(State *state, float alpha, float beta);
 };
 
 

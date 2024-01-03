@@ -24,8 +24,10 @@ StateVector State::get_children() const
 {
     auto children = StateVector();
     if (player == 1) {
+        children.reserve(player_cards.count());
         generate_children_player(children);
     } else {
+        children.reserve(remaining_cards.count());
         generate_children_opponent(children);
     }
 
@@ -50,13 +52,13 @@ void State::generate_children_opponent(StateVector &children) const
             continue;
         }
 
-        auto child = State(*this);
-        child.trick_cards.emplace_back(i);
-        child.trick_cards.back().player = player;
-        child.remaining_cards[i] = false;
-        child.player = get_next_player();
+        auto child = new State(*this);
+        child->trick_cards.emplace_back(i);
+        child->trick_cards.back().player = player;
+        child->remaining_cards[i] = false;
+        child->player = get_next_player();
 
-        if (child.trick_cards.size() == 4) {
+        if (child->trick_cards.size() == 4) {
             complete_trick(child);
         }
 
@@ -72,13 +74,13 @@ void State::generate_children_player(StateVector &children) const
             continue;
         }
 
-        auto child = State(*this);
-        child.trick_cards.emplace_back(i);
-        child.trick_cards.back().player = player;
-        child.player_cards[i] = false;
-        child.player = get_next_player();
+        auto child = new State(*this);
+        child->trick_cards.emplace_back(i);
+        child->trick_cards.back().player = player;
+        child->player_cards[i] = false;
+        child->player = get_next_player();
 
-        if (child.trick_cards.size() == 4) {
+        if (child->trick_cards.size() == 4) {
             complete_trick(child);
         }
 
@@ -87,15 +89,15 @@ void State::generate_children_player(StateVector &children) const
 }
 
 
-void State::complete_trick(State &child) const
+void State::complete_trick(State *child) const
 {
-    if (Manille::determine_winner(child.trick_cards, trump) == 1 ||
-        Manille::determine_winner(child.trick_cards, trump) == 3)
-        child.score += Manille::get_score(child.trick_cards);
+    int winner = Manille::determine_winner(child->trick_cards, trump);
+    if (winner == 1 || winner == 3)
+        child->score += Manille::get_score(child->trick_cards);
     else
-        child.score -= Manille::get_score(child.trick_cards);
+        child->score -= Manille::get_score(child->trick_cards);
 
-    child.trick_cards.clear();
+    child->trick_cards.clear();
 }
 
 
@@ -114,4 +116,5 @@ State::State(const CardVector& player_cards, const CardVector& remaining_cards, 
     for (auto &card: remaining_cards) {
         this->remaining_cards[static_cast<int>(card)] = true;
     }
+    trick_cards.reserve(4);
 }

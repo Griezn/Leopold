@@ -6,12 +6,13 @@
 #define LEOPOLD_I_STATE_HPP
 
 #include <vector>
+#include <bitset>
 #include "Card.hpp"
 
 struct State;
 
 typedef std::vector<Card> CardVector;
-typedef std::vector<State> StateVector;
+typedef std::vector<State*> StateVector;
 
 
 struct State {
@@ -91,7 +92,7 @@ private:
      * @post the trick cards are cleared
      * @post the score is calculated
      */
-    void complete_trick(State &child) const;
+    void complete_trick(State *child) const;
 };
 
 

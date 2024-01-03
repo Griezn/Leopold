@@ -57,9 +57,9 @@ TEST(State, get_children_player)
     EXPECT_EQ(children.size(), 1);
     auto child = children[0];
 
-    EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 0.5);
-    EXPECT_EQ(child.get_player(), 2);
+    EXPECT_TRUE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), 0.5);
+    EXPECT_EQ(child->get_player(), 2);
 }
 
 
@@ -76,9 +76,9 @@ TEST(State, get_children_opp)
     EXPECT_EQ(children.size(), 1);
 
     auto child = children[0];
-    EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), -0.5);
-    EXPECT_EQ(child.get_player(), 1);
+    EXPECT_TRUE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), -0.5);
+    EXPECT_EQ(child->get_player(), 1);
 }
 
 
@@ -95,31 +95,31 @@ TEST(State, get_children)
     EXPECT_EQ(children.size(), 1);
 
     auto child = children[0];
-    EXPECT_FALSE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 0);
-    EXPECT_EQ(child.get_player(), 2);
+    EXPECT_FALSE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), 0);
+    EXPECT_EQ(child->get_player(), 2);
 
-    children = child.get_children();
+    children = child->get_children();
     EXPECT_EQ(children.size(), 3);
 
     child = children[0];
-    EXPECT_FALSE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 0);
-    EXPECT_EQ(child.get_player(), 3);
+    EXPECT_FALSE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), 0);
+    EXPECT_EQ(child->get_player(), 3);
 
-    children = child.get_children();
+    children = child->get_children();
     EXPECT_EQ(children.size(), 2);
 
     child = children[0];
-    EXPECT_FALSE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 0);
-    EXPECT_EQ(child.get_player(), 4);
+    EXPECT_FALSE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), 0);
+    EXPECT_EQ(child->get_player(), 4);
 
-    children = child.get_children();
+    children = child->get_children();
     EXPECT_EQ(children.size(), 1);
 
     child = children[0];
-    EXPECT_TRUE(child.is_terminal());
-    EXPECT_EQ(child.get_score(), 5);
-    EXPECT_EQ(child.get_player(), 1);
+    EXPECT_TRUE(child->is_terminal());
+    EXPECT_EQ(child->get_score(), 5);
+    EXPECT_EQ(child->get_player(), 1);
 }

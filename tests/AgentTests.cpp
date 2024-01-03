@@ -31,7 +31,6 @@ TEST(Agent, alpha_beta)
 
     auto state = State(player_cards, deck, {}, Manille::choose_trump(player_cards), 1);
 
-    auto val = agent.alpha_beta(state, -60.f, 60.f);
+    auto val = agent.alpha_beta(&state, -60.f, 60.f);
     std::cout << val << std::endl;
-    std::cout << agent.count << std::endl;
 }
