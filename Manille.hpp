@@ -10,7 +10,7 @@
 #include "Card.hpp"
 
 typedef std::vector<Card> CardVector;
-typedef std::shared_ptr<CardVector> CardVectorPtr;
+
 
 struct Manille {
     /**

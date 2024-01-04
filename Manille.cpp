@@ -127,7 +127,7 @@ CardVector Manille::filter_cards_higher(const CardVector &cards, Suit suit, Card
 
 Card Manille::get_highest_card(const CardVector &cards, Suit suit)
 {
-    Card highest = Card(0);
+    Card highest = Card(31);
     for (auto &card: cards) {
         if (card.suit() == suit && card >= highest) {
             highest = card;

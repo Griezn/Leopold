@@ -5,7 +5,7 @@
 #ifndef CARD_HPP
 #define CARD_HPP
 
-struct Card;
+class Card;
 typedef std::uint8_t byte;
 typedef byte Suit;
 typedef byte Value;
@@ -22,24 +22,25 @@ constexpr byte SPADES_MASK  = 0b0001'0000;
 constexpr byte CLUBS_MASK   = 0b0010'0000;
 constexpr byte DIAMONDS_MASK= 0b0011'0000;
 
-constexpr byte SEVEN_MASK   = 0b0000'0000;
-constexpr byte EIGHT_MASK   = 0b0000'0001;
-constexpr byte NINE_MASK    = 0b0000'0010;
-constexpr byte JACK_MASK    = 0b0000'0011;
-constexpr byte QUEEN_MASK   = 0b0000'0100;
-constexpr byte KING_MASK    = 0b0000'0101;
-constexpr byte ACE_MASK     = 0b0000'0110;
-constexpr byte TEN_MASK     = 0b0000'0111;
+constexpr byte TEN_MASK     = 0b0000'0000;
+constexpr byte ACE_MASK     = 0b0000'0001;
+constexpr byte KING_MASK    = 0b0000'0010;
+constexpr byte QUEEN_MASK   = 0b0000'0011;
+constexpr byte JACK_MASK    = 0b0000'0100;
+constexpr byte NINE_MASK    = 0b0000'0101;
+constexpr byte EIGHT_MASK   = 0b0000'0110;
+constexpr byte SEVEN_MASK   = 0b0000'0111;
 
 constexpr byte P1_MASK      = 0b0000'0000;
 constexpr byte P2_MASK      = 0b0100'0000;
 constexpr byte P3_MASK      = 0b1000'0000;
 constexpr byte P4_MASK      = 0b1100'0000;
 
-struct Card {
+class Card {
     byte card;
 
-    explicit Card(int value) : Card((value/8) << 4, value % 8)
+public:
+    explicit Card(int value) : Card((value % 4) << 4, value / 4)
     {
     }
 
@@ -73,13 +74,13 @@ struct Card {
 
     inline bool operator<(const Card &other) const
     {
-        return (this->card & VALUE_MASK) < (other.card & VALUE_MASK);
+        return (this->card & VALUE_MASK) > (other.card & VALUE_MASK);
     }
 
 
     inline bool operator>(const Card &other) const
     {
-        return (other.card & VALUE_MASK) < (this->card & VALUE_MASK);
+        return (other.card & VALUE_MASK) > (this->card & VALUE_MASK);
     }
 
 
@@ -121,7 +122,7 @@ struct Card {
 
     explicit operator int() const
     {
-        return (card & VALUE_MASK) + ((card & SUIT_MASK) >> 4) * 8;
+        return (card & VALUE_MASK) * 4 + ((card & SUIT_MASK) >> 4);
     }
 
 

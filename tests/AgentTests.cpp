@@ -17,8 +17,7 @@ TEST(Agent, alpha_beta)
         deck[4],
         deck[5],
         deck[6],
-        deck[7],
-        deck[8],
+        deck[7]
     };
 
     for (auto &card: player_cards) {

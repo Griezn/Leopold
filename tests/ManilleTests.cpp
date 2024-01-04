@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "../Manille.hpp"
-#include "../Card.hpp"
 
 
 TEST(Manille, get_highest_card)
