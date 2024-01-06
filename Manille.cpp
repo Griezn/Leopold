@@ -207,7 +207,7 @@ CardBitset suit_to_filter(Suit suit)
 }
 
 
-inline CardBitset Manille::filter_bitset(const CardBitset &cards, Suit suit)
+CardBitset Manille::filter_bitset(const CardBitset &cards, Suit suit)
 {
     return cards & suit_to_filter(suit);
 }
