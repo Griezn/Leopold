@@ -7,9 +7,11 @@
 
 #include <vector>
 #include <memory>
+#include <bitset>
 #include "Card.hpp"
 
 typedef std::vector<Card> CardVector;
+typedef std::bitset<32> CardBitset;
 
 
 struct Manille {
@@ -21,7 +23,7 @@ struct Manille {
      * @param trump the trump suit
      * @return the cards that the player is allowed to play
      */
-    [[nodiscard]] static CardVector get_allowed_cards(const CardVector &player, const CardVector &trick, Suit trump);
+    [[nodiscard]] static CardBitset get_allowed_cards(const CardBitset &player, const CardVector &trick, int playerI, Suit trump);
 
 
     /**
@@ -47,7 +49,7 @@ struct Manille {
      * @param player the cards that the player has
      * @return the trump suit
      */
-    [[nodiscard]] static Suit choose_trump(const CardVector &player);
+    [[nodiscard]] static Suit choose_trump(const CardBitset &player);
 
 
     /**
@@ -79,6 +81,9 @@ struct Manille {
     static CardVector filter_cards(const CardVector &cards, Suit suit);
 
 
+    static CardBitset filter_bitset(const CardBitset &cards, Suit suit);
+
+
     /**
      * Filters the cards that have a certain suit and are higher than a certain card.
      * @param cards the cards to filter
@@ -87,6 +92,9 @@ struct Manille {
      * @return the cards that have the suit and are higher than the card
      */
     static CardVector filter_cards_higher(const CardVector &cards, Suit suit, Card card);
+
+
+    static CardBitset filter_bitset_higher(const CardBitset &cards, Suit suit, Card card);
 
 
     /**

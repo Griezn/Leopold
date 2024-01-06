@@ -67,45 +67,78 @@ TEST(Card, deck)
 TEST(Card, to_int)
 {
     EXPECT_EQ(int(Card(HEARTS_MASK, TEN_MASK)), 0);
+    EXPECT_EQ(int(Card(SPADES_MASK, TEN_MASK)), 1);
+    EXPECT_EQ(int(Card(CLUBS_MASK, TEN_MASK)), 2);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, TEN_MASK)), 3);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, ACE_MASK)), 4);
+    EXPECT_EQ(int(Card(SPADES_MASK, ACE_MASK)), 5);
+    EXPECT_EQ(int(Card(CLUBS_MASK, ACE_MASK)), 6);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, ACE_MASK)), 7);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, KING_MASK)), 8);
+    EXPECT_EQ(int(Card(SPADES_MASK, KING_MASK)), 9);
+    EXPECT_EQ(int(Card(CLUBS_MASK, KING_MASK)), 10);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, KING_MASK)), 11);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, QUEEN_MASK)), 12);
+    EXPECT_EQ(int(Card(SPADES_MASK, QUEEN_MASK)), 13);
+    EXPECT_EQ(int(Card(CLUBS_MASK, QUEEN_MASK)), 14);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, QUEEN_MASK)), 15);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, JACK_MASK)), 16);
+    EXPECT_EQ(int(Card(SPADES_MASK, JACK_MASK)), 17);
+    EXPECT_EQ(int(Card(CLUBS_MASK, JACK_MASK)), 18);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, JACK_MASK)), 19);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, NINE_MASK)), 20);
+    EXPECT_EQ(int(Card(SPADES_MASK, NINE_MASK)), 21);
+    EXPECT_EQ(int(Card(CLUBS_MASK, NINE_MASK)), 22);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, NINE_MASK)), 23);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, EIGHT_MASK)), 24);
+    EXPECT_EQ(int(Card(SPADES_MASK, EIGHT_MASK)), 25);
+    EXPECT_EQ(int(Card(CLUBS_MASK, EIGHT_MASK)), 26);
+    EXPECT_EQ(int(Card(DIAMONDS_MASK, EIGHT_MASK)), 27);
+
     EXPECT_EQ(int(Card(HEARTS_MASK, SEVEN_MASK)), 28);
+    EXPECT_EQ(int(Card(SPADES_MASK, SEVEN_MASK)), 29);
+    EXPECT_EQ(int(Card(CLUBS_MASK, SEVEN_MASK)), 30);
     EXPECT_EQ(int(Card(DIAMONDS_MASK, SEVEN_MASK)), 31);
 }
 
 
 TEST(Card, from_int)
 {
-    auto card = Card(0);
-    EXPECT_EQ(card, Card(HEARTS_MASK,TEN_MASK));
+    EXPECT_EQ(Card(0), Card(HEARTS_MASK,TEN_MASK));
+    EXPECT_EQ(Card(1), Card(SPADES_MASK, TEN_MASK));
+    EXPECT_EQ(Card(2), Card(CLUBS_MASK, TEN_MASK));
+    EXPECT_EQ(Card(3), Card(DIAMONDS_MASK, TEN_MASK));
 
-    card = Card(4);
-    EXPECT_EQ(card, Card(HEARTS_MASK, ACE_MASK));
+    EXPECT_EQ(Card(4), Card(HEARTS_MASK, ACE_MASK));
+    EXPECT_EQ(Card(5), Card(SPADES_MASK, ACE_MASK));
+    EXPECT_EQ(Card(6), Card(CLUBS_MASK, ACE_MASK));
+    EXPECT_EQ(Card(7), Card(DIAMONDS_MASK, ACE_MASK));
 
-    card = Card(8);
-    EXPECT_EQ(card, Card(HEARTS_MASK, KING_MASK));
+    EXPECT_EQ(Card(8), Card(HEARTS_MASK, KING_MASK));
 
-    card = Card(12);
-    EXPECT_EQ(card, Card(HEARTS_MASK, QUEEN_MASK));
+    EXPECT_EQ(Card(12), Card(HEARTS_MASK, QUEEN_MASK));
 
-    card = Card(16);
-    EXPECT_EQ(card, Card(HEARTS_MASK, JACK_MASK));
+    EXPECT_EQ(Card(16), Card(HEARTS_MASK, JACK_MASK));
+    EXPECT_EQ(Card(17), Card(SPADES_MASK, JACK_MASK));
+    EXPECT_EQ(Card(18), Card(CLUBS_MASK, JACK_MASK));
+    EXPECT_EQ(Card(19), Card(DIAMONDS_MASK, JACK_MASK));
 
-    card = Card(20);
-    EXPECT_EQ(card, Card(HEARTS_MASK, NINE_MASK));
+    EXPECT_EQ(Card(20), Card(HEARTS_MASK, NINE_MASK));
 
-    card = Card(24);
-    EXPECT_EQ(card, Card(HEARTS_MASK, EIGHT_MASK));
+    EXPECT_EQ(Card(24), Card(HEARTS_MASK, EIGHT_MASK));
+    EXPECT_EQ(Card(25), Card(SPADES_MASK, EIGHT_MASK));
+    EXPECT_EQ(Card(26), Card(CLUBS_MASK, EIGHT_MASK));
+    EXPECT_EQ(Card(27), Card(DIAMONDS_MASK, EIGHT_MASK));
 
-    card = Card(28);
-    EXPECT_EQ(card, Card(HEARTS_MASK, SEVEN_MASK));
+    EXPECT_EQ(Card(28), Card(HEARTS_MASK, SEVEN_MASK));
 
-    card = Card(31);
-    EXPECT_EQ(card, Card(DIAMONDS_MASK, SEVEN_MASK));
+    EXPECT_EQ(Card(31), Card(DIAMONDS_MASK, SEVEN_MASK));
 }
 
 

@@ -17,7 +17,9 @@ TEST(Agent, alpha_beta)
         deck[4],
         deck[5],
         deck[6],
-        deck[7]
+        deck[7],
+        deck[8],
+        deck[9],
     };
 
     for (auto &card: player_cards) {
@@ -28,7 +30,7 @@ TEST(Agent, alpha_beta)
     deck.erase(deck.begin(), deck.begin() + (deck.size() - size));
     EXPECT_EQ(deck.size(), size);
 
-    auto state = State(player_cards, deck, {}, Manille::choose_trump(player_cards), 1);
+    auto state = State(player_cards, deck, {}, HEARTS_MASK, 1);
 
     auto val = agent.alpha_beta(&state, -60.f, 60.f);
     std::cout << val << std::endl;

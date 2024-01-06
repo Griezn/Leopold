@@ -47,8 +47,9 @@ int State::get_next_player() const
 
 void State::generate_children_opponent(StateVector &children) const
 {
+    auto allowed_cards = Manille::get_allowed_cards(remaining_cards, trick_cards, player, trump);
     for (int i = 0; i < CARD_COUNT; ++i) {
-        if (!remaining_cards[i]) {
+        if (!allowed_cards[i]) {
             continue;
         }
 
@@ -69,8 +70,9 @@ void State::generate_children_opponent(StateVector &children) const
 
 void State::generate_children_player(StateVector &children) const
 {
+    auto allowed_cards = Manille::get_allowed_cards(player_cards, trick_cards, player, trump);
     for (int i = 0; i < CARD_COUNT; ++i) {
-        if (!player_cards[i]) {
+        if (!allowed_cards[i]) {
             continue;
         }
 
