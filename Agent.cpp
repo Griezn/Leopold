@@ -2,7 +2,7 @@
 // Created by Seppe Degryse on 29/12/2023.
 //
 
-#include <iostream>
+#include <taskflow/taskflow.hpp>
 #include "Agent.hpp"
 #include "State.hpp"
 
@@ -55,6 +55,7 @@ float Agent::minimize(State *state, float alpha, float beta)
 
 Card Agent::choose_card(const CardVector &player, const CardVector &trick, Suit trump)
 {
+    // initialize state
     auto deck = Card::get_deck();
     for (auto &card: player) {
         deck.erase(std::find(deck.begin(), deck.end(), card));
@@ -63,10 +64,15 @@ Card Agent::choose_card(const CardVector &player, const CardVector &trick, Suit 
     deck.erase(deck.begin(), deck.begin() + (deck.size() - size));
     auto state = State(player, deck, trick, trump, 1);
 
-    std::vector<float> scores;
-    for (auto child : state.get_children()) {
-        scores.push_back(alpha_beta(child, -60.f, 60.f));
-    }
+    //calculate
+    tf::Executor executor;
+    std::vector<std::future<float>> f;
 
-    return player[std::distance(scores.begin(), std::max_element(scores.begin(), scores.end()))];
+    for (auto child : state.get_children()) {
+        f.emplace_back(executor.async([child, this] { return Agent::alpha_beta(child, -60.f, 60.f); }));
+    }
+    // wait
+    executor.wait_for_all();
+
+    return {};
 }

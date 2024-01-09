@@ -18,10 +18,6 @@ TEST(Agent, alpha_beta)
         deck[5],
         deck[6],
         deck[7],
-        deck[8],
-        deck[9],
-        deck[10],
-        deck[11],
     };
 
     for (auto &card: player_cards) {
@@ -36,4 +32,25 @@ TEST(Agent, alpha_beta)
 
     auto val = agent.alpha_beta(&state, -60.f, 60.f);
     std::cout << val << std::endl;
+}
+
+
+TEST(Agent, choose_card)
+{
+    auto agent = Agent();
+
+    auto deck = Card::get_deck();
+
+    CardVector player_cards = {
+            deck[4],
+            deck[5],
+            deck[6],
+            deck[7],
+            deck[8],
+            deck[9],
+            deck[10],
+    };
+
+    agent.choose_card(player_cards, {}, HEARTS_MASK);
+
 }

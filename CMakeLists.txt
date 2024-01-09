@@ -10,6 +10,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+FetchContent_Declare(
+        taskflow
+        URL https://github.com/taskflow/taskflow/archive/refs/tags/v3.6.0.zip
+)
+FetchContent_MakeAvailable(taskflow)
+
+
 add_library(Leopold STATIC
         Manille.cpp
         Manille.hpp
@@ -17,8 +24,10 @@ add_library(Leopold STATIC
         State.hpp
         State.cpp
         Agent.cpp
+        Agent.hpp
 )
 
+target_include_directories(Leopold PRIVATE ${taskflow_SOURCE_DIR})
 
 enable_testing()
 
