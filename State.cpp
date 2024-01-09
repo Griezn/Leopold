@@ -2,7 +2,6 @@
 // Created by Seppe Degryse on 31/12/2023.
 //
 
-#include <iostream>
 #include "State.hpp"
 #include "Card.hpp"
 #include "Manille.hpp"
@@ -48,12 +47,14 @@ int State::get_next_player() const
 void State::generate_children_opponent(StateVector &children) const
 {
     auto allowed_cards = Manille::get_allowed_cards(remaining_cards, trick_cards, player, trump);
+
     for (int i = 0; i < CARD_COUNT; ++i) {
         if (!allowed_cards[i]) {
             continue;
         }
 
         auto child = new State(*this);
+
         child->trick_cards.emplace_back(i);
         child->trick_cards.back().set_player(player);
         child->remaining_cards[i] = false;
@@ -71,6 +72,7 @@ void State::generate_children_opponent(StateVector &children) const
 void State::generate_children_player(StateVector &children) const
 {
     auto allowed_cards = Manille::get_allowed_cards(player_cards, trick_cards, player, trump);
+
     for (int i = 0; i < CARD_COUNT; ++i) {
         if (!allowed_cards[i]) {
             continue;
